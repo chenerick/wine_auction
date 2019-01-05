@@ -11,7 +11,7 @@ wine_col = 'Wine'
 producerdesignation_col = 'ProducerAndDesignation'
 unit_price_col = 'UnitPriceUSD'
 annual_percent_change_col = 'Annual Percent Change'
-unique_bottle_keys = ['Vintage', "Wine", "ProducerAndDesignation"]
+unique_bottle_keys = ['Vintage', "Wine", "ProducerAndDesignation", 'Producer', 'Designation']
 
 
 '''

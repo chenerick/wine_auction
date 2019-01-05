@@ -171,9 +171,28 @@ def dataframe_current_auction(auction_id):
     For a given auction, scrapes the current bid information flattens to df
     """
     current_auction_scrape = query_current_auction_results(auction_id)
-    current_auction_df_full = pd.DataFrame(current_auction_scrape)
+
+    '''
+    Each item of the list current_auction_scrape represents a lot payload
+    We want to return a dataframe that contains a row for each lot item.
+    It's a pain to denormalize the list of dictionaries when it's in dataframe form
+    '''
+
+    normalized_lot_item_list = []
+    for lot in current_auction_scrape:
+        for item in lot['lotItems']:
+            lot_copy = lot
+            # Stitch together the item attributes w/ the lot attributes into a shallow dictionary
+            normalized_lot_item = {**lot, **item}
+            normalized_lot_item_list += [normalized_lot_item]
+
+
+    current_auction_df_full = pd.DataFrame(normalized_lot_item_list)
+
     return current_auction_df_full
 
 # df = dataframe_ackerman_auction()
 #current_auction_scrape = query_current_auction_results(1216)
 #print(current_auction_scrape)
+#df = dataframe_current_auction(1216)
+#print(df.head())
